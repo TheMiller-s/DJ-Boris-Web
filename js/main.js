@@ -1019,7 +1019,8 @@
         ],
         vibeNote: 'Esta noche la atmósfera está curada para elevar la vibra con grooves elegantes y beats envolventes. Las peticiones deben armonizar con este concepto o activar el Salto VIP con aporte al DJ.'
       };
-      this.allAvailableGenres = [
+      this.genresListKey = 'dj_all_available_genres';
+      const defaultAvailable = [
         'Afro House & Melodic',
         'Tech House Vanguardia',
         'Nu-Disco & Funk Grooves',
@@ -1032,6 +1033,12 @@
         'Indie Dance',
         'R&B & Hip Hop Chic'
       ];
+      try {
+        const savedList = JSON.parse(localStorage.getItem(this.genresListKey));
+        this.allAvailableGenres = (savedList && savedList.length > 0) ? savedList : defaultAvailable;
+      } catch(e) {
+        this.allAvailableGenres = defaultAvailable;
+      }
       this.data = this.loadData();
       this.render();
     }
@@ -1070,8 +1077,21 @@
     addCustomGenre(name) {
       const trimmed = name.trim();
       if (!trimmed) return;
-      if (!this.allAvailableGenres.includes(trimmed)) this.allAvailableGenres.push(trimmed);
-      if (!this.data.activeGenres.includes(trimmed)) this.saveData({ activeGenres: [...this.data.activeGenres, trimmed] });
+      if (!this.allAvailableGenres.includes(trimmed)) {
+          this.allAvailableGenres.push(trimmed);
+          localStorage.setItem(this.genresListKey, JSON.stringify(this.allAvailableGenres));
+      }
+      if (!this.data.activeGenres.includes(trimmed)) {
+          this.saveData({ activeGenres: [...this.data.activeGenres, trimmed] });
+      }
+    }
+    deleteGenre(name) {
+      this.allAvailableGenres = this.allAvailableGenres.filter(g => g !== name);
+      localStorage.setItem(this.genresListKey, JSON.stringify(this.allAvailableGenres));
+      if (this.data.activeGenres.includes(name)) {
+          this.saveData({ activeGenres: this.data.activeGenres.filter(g => g !== name) });
+      }
+      this.render();
     }
     render() {
       const venueEl = document.getElementById('tonight-venue-name');
@@ -1773,10 +1793,18 @@
       const activeList = this.genreManager.data.activeGenres;
       this.genreManager.allAvailableGenres.forEach(genre => {
         const isActive = activeList.includes(genre);
+        
+        const wrapper = document.createElement('div');
+        wrapper.style.display = 'inline-flex';
+        wrapper.style.alignItems = 'center';
+        wrapper.style.gap = '4px';
+        wrapper.style.margin = '0 6px 8px 0';
+        
         const chip = document.createElement('button');
         chip.type = 'button';
         chip.className = `chip-btn ${isActive ? 'active' : ''}`;
         chip.innerHTML = `${isActive ? '✓ ' : '+ '} ${genre}`;
+        chip.style.margin = '0';
         chip.addEventListener('click', () => {
           this.genreManager.toggleGenre(genre);
           this.renderGenreChips();
@@ -1784,7 +1812,34 @@
             window.audioPlayerInstance.updateActiveTrack(true);
           }
         });
-        this.genreChipsContainer.appendChild(chip);
+        
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.innerHTML = '×';
+        delBtn.style.background = 'rgba(244,63,94,0.15)';
+        delBtn.style.color = '#f43f5e';
+        delBtn.style.border = '1px solid rgba(244,63,94,0.3)';
+        delBtn.style.borderRadius = '50%';
+        delBtn.style.width = '24px';
+        delBtn.style.height = '24px';
+        delBtn.style.cursor = 'pointer';
+        delBtn.style.display = 'flex';
+        delBtn.style.alignItems = 'center';
+        delBtn.style.justifyContent = 'center';
+        delBtn.style.fontSize = '14px';
+        delBtn.title = 'Eliminar permanentemente';
+        delBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (confirm(`¿Eliminar permanentemente el género "` + genre + `"?`)) {
+                this.genreManager.deleteGenre(genre);
+                this.renderGenreChips();
+                if (window.audioPlayerInstance) window.audioPlayerInstance.updateActiveTrack(true);
+            }
+        });
+        
+        wrapper.appendChild(chip);
+        wrapper.appendChild(delBtn);
+        this.genreChipsContainer.appendChild(wrapper);
       });
     }
     renderAdminQueue() {
