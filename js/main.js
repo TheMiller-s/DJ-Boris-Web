@@ -1250,7 +1250,7 @@
           : `<span class="queue-tag">💿 Versión Original</span>`;
 
         const vipTagHtml = isVip
-          ? `<span class="queue-tag queue-tag-vip">💎 VIP Bypass ($) ${req.vipReceipt ? `- Ref: ` + this.escapeHtml(req.vipReceipt) : ``}</span>`
+          ? `<span class="queue-tag queue-tag-vip">💎 VIP Bypass ($)</span>`
           : `<span class="queue-tag">🎶 Género de la Noche</span>`;
 
         itemEl.innerHTML = `
