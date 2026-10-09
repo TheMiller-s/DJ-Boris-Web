@@ -1,4 +1,4 @@
-/**
+﻿/**
  * QR Code Generator & Luxury Table Tent Printable Engine
  * Renders QR code locally on canvas and prepares printable bar standees.
  */
@@ -148,7 +148,7 @@ class QRManager {
     // Rules summary below
     ctx.fillStyle = '#d4af37';
     ctx.font = 'bold 15px "Plus Jakarta Sans", sans-serif';
-    ctx.fillText('✦ PETICIONES EN VIVO A CABINA  |  💎 VIP BYPASS ($) ✦', canvas.width / 2, 600);
+    ctx.fillText('✦ PETICIONES EN VIVO A CABINA  |  💎 PASE VIP ✦', canvas.width / 2, 600);
 
     ctx.fillStyle = '#64748b';
     ctx.font = '13px "Plus Jakarta Sans", sans-serif';

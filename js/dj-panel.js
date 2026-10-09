@@ -1,4 +1,4 @@
-/**
+﻿/**
  * DJ Booth Quick Control Panel (Modo Cabina)
  * Protected with quick PIN. Allows on-the-fly genre updates & live request queue management.
  */
@@ -187,7 +187,7 @@ class DJBoothPanel {
         <div style="min-width: 0;">
           <div style="font-weight: 700; font-size: 0.95rem; color: #fff;">
             #${idx + 1} ${req.song} <span style="font-size: 0.8rem; color: var(--gold-light);">${verText}</span>
-            ${isVip ? '<span class="badge badge-vip" style="font-size: 0.65rem; padding: 0.1rem 0.4rem;">VIP $</span>' : ''}
+            ${isVip ? '<span class="badge badge-vip" style="font-size: 0.65rem; padding: 0.1rem 0.4rem;">VIP</span>' : ''}
           </div>
           <div style="font-size: 0.8rem; color: var(--text-muted);">
             ${req.artist} • ${req.guest} • Estado: <strong>${req.status}</strong>

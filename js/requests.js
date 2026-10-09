@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Song Request Engine & Live Ordered Queue
  * Handles conditional version input, VIP rule bypass switch, and live queue ordering.
  */
@@ -231,7 +231,7 @@ class RequestManager {
 
       // VIP Bypass tag
       const vipTagHtml = isVip
-        ? `<span class="queue-tag queue-tag-vip">💎 VIP Bypass ($)</span>`
+        ? `<span class="queue-tag queue-tag-vip">💎 Pase VIP</span>`
         : `<span class="queue-tag">🎶 Género de la Noche</span>`;
 
       itemEl.innerHTML = `

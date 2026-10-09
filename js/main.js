@@ -1017,7 +1017,7 @@
           'Deep House Exclusivo',
           'Latin House & Organic'
         ],
-        vibeNote: 'Esta noche la atmósfera está curada para elevar la vibra con grooves elegantes y beats envolventes. Las peticiones deben armonizar con este concepto o activar el Salto VIP con aporte al DJ.'
+        vibeNote: 'Esta noche la atmósfera está curada para elevar la vibra con grooves elegantes y beats envolventes. Las peticiones deben armonizar con este concepto o activar el Salto VIP con Pase VIP.'
       };
       this.genresListKey = 'dj_all_available_genres';
       const defaultAvailable = [
@@ -1270,7 +1270,7 @@
           : `<span class="queue-tag">💿 Versión Original</span>`;
 
         const vipTagHtml = isVip
-          ? `<span class="queue-tag queue-tag-vip">💎 VIP Bypass ($)</span>`
+          ? `<span class="queue-tag queue-tag-vip">💎 Pase VIP</span>`
           : `<span class="queue-tag">🎶 Género de la Noche</span>`;
 
         itemEl.innerHTML = `
@@ -1396,7 +1396,7 @@
       }
       ctx.fillStyle = '#d4af37';
       ctx.font = 'bold 15px "Plus Jakarta Sans", sans-serif';
-      ctx.fillText('✦ PETICIONES EN VIVO A CABINA  |  💎 VIP BYPASS ($) ✦', canvas.width / 2, 600);
+      ctx.fillText('✦ PETICIONES EN VIVO A CABINA  |  💎 PASE VIP ✦', canvas.width / 2, 600);
       ctx.fillStyle = '#64748b';
       ctx.font = '13px "Plus Jakarta Sans", sans-serif';
       ctx.fillText('+25 Años de Trayectoria  •  Guayaquil - Samborondón - Salinas', canvas.width / 2, 650);
@@ -1866,7 +1866,7 @@
           <div style="min-width: 0;">
             <div style="font-weight: 700; font-size: 0.92rem; color: #fff;">
               #${idx + 1} ${req.song} <span style="font-size: 0.78rem; color: var(--gold-light);">${verText}</span>
-              ${isVip ? `<span class="badge badge-vip" style="font-size: 0.65rem; padding: 0.1rem 0.35rem;">VIP $ ${req.vipReceipt ? `[Ref: ${req.vipReceipt}]` : '' }</span>` : ''}
+              ${isVip ? `<span class="badge badge-vip" style="font-size: 0.65rem; padding: 0.1rem 0.35rem;">VIP</span>` : ''}
             </div>
             <div style="font-size: 0.78rem; color: var(--text-muted);">
               ${req.artist} • ${req.guest} • Estado: <strong>${req.status}</strong>

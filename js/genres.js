@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Tonight's Music / Soundscape Manager
  * Allows easy updating of active music genres for tonight's gig.
  */
@@ -15,7 +15,7 @@ class GenreManager {
         'Deep House Exclusivo',
         'Latin House & Organic'
       ],
-      vibeNote: 'Esta noche la atmósfera está curada para elevar la vibra con grooves elegantes y beats envolventes. Las peticiones deben armonizar con este concepto o activar el Salto VIP con aporte al DJ.'
+      vibeNote: 'Esta noche la atmósfera está curada para elevar la vibra con grooves elegantes y beats envolventes. Las peticiones deben armonizar con este concepto o activar el Salto VIP con Pase VIP.'
     };
 
     this.allAvailableGenres = [
