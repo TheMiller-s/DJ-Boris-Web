@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -270,7 +270,68 @@
                 </label>
               </div>
               <div class="vip-bypass-desc" id="vip-bypass-desc">
-                ✨ <strong>Pase VIP Activado:</strong> Tu solicitud se marcará con prioridad especial en la cabina del DJ. <strong>Nota:</strong> Toda canción tiene un intervalo de 1 a 2 canciones previas para un ingreso PREMIUM y mantener el ritmo perfecto de la mezcla.
+                <div class="vip-note-banner">
+                  ✨ <strong>Pase VIP Activado:</strong> Tu solicitud se marcará con prioridad especial en la cabina del DJ. <strong>Nota:</strong> Toda canción tiene un intervalo de 1 a 2 canciones previas para un ingreso PREMIUM y mantener el ritmo perfecto de la mezcla.
+                </div>
+
+                <div class="vip-payment-section">
+                  <div class="vip-payment-title">Selecciona cómo deseas realizar tu aporte:</div>
+                  <div class="vip-method-tabs">
+                    <button type="button" class="vip-tab-btn active" id="btn-method-transfer">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                      <span>Transferencia</span>
+                    </button>
+                    <button type="button" class="vip-tab-btn" id="btn-method-cash">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                      <span>Efectivo</span>
+                    </button>
+                  </div>
+
+                  <!-- Panel Transferencia -->
+                  <div class="vip-panel-content" id="panel-transfer">
+                    <div class="bank-details-card">
+                      <div class="bank-card-header">
+                        <div class="bank-name">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"/></svg>
+                          <span id="bank-name-display">Banco Pichincha</span>
+                        </div>
+                        <span class="account-type-badge" id="bank-type-display">Ahorros</span>
+                      </div>
+
+                      <div class="bank-account-row">
+                        <div class="account-number-wrap">
+                          <span class="account-label">Número de Cuenta:</span>
+                          <span class="account-number" id="bank-acc-number">2208491024</span>
+                        </div>
+                        <button type="button" class="btn-copy-account" id="btn-copy-acc" title="Copiar número de cuenta">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                          <span id="btn-copy-acc-text">Copiar</span>
+                        </button>
+                      </div>
+
+                      <div class="bank-extra-info">
+                        <div><strong>Titular:</strong> <span id="bank-owner-display">Boris ... (DJ Boris)</span></div>
+                        <div><strong>Cédula / RUC:</strong> <span id="bank-id-display">09XXXXXXXX</span></div>
+                        <div><strong>Correo:</strong> <span id="bank-email-display">transferencias@djboris.com</span></div>
+                      </div>
+
+                      <div style="margin-top: 0.65rem;">
+                        <input type="text" id="vip-receipt-number" class="form-input" placeholder="Número de Comprobante / Referencia (Opcional)" style="font-size: 0.82rem; padding: 0.6rem 0.8rem; background: rgba(0,0,0,0.6);">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Panel Efectivo -->
+                  <div class="vip-panel-content" id="panel-cash" style="display: none;">
+                    <div class="cash-details-card">
+                      <div class="cash-icon-wrap">💵</div>
+                      <div class="cash-text">
+                        <strong>Pago en Efectivo</strong>
+                        <p>Acércate directamente a la <strong>Cabina del DJ</strong> o comunícalo al personal de barra para validar tu Pase VIP en el momento.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 

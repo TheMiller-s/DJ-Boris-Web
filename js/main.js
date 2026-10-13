@@ -1140,6 +1140,15 @@
       this.preferenceTextInput = document.getElementById('req-preference-text');
       this.vipToggle = document.getElementById('vip-bypass-toggle');
       this.vipDesc = document.getElementById('vip-bypass-desc');
+      this.btnMethodTransfer = document.getElementById('btn-method-transfer');
+      this.btnMethodCash = document.getElementById('btn-method-cash');
+      this.panelTransfer = document.getElementById('panel-transfer');
+      this.panelCash = document.getElementById('panel-cash');
+      this.btnCopyAcc = document.getElementById('btn-copy-acc');
+      this.btnCopyAccText = document.getElementById('btn-copy-acc-text');
+      this.bankAccNumber = document.getElementById('bank-acc-number');
+      this.vipReceiptInput = document.getElementById('vip-receipt-number');
+      this.vipPaymentMethod = 'Transferencia';
       
       this.requests = this.loadRequests();
       this.initEvents();
@@ -1152,7 +1161,7 @@
       } catch (e) {}
       return [
         { id: 101, song: 'Losing It', artist: 'Fisher', guest: 'Mesa VIP 3', versionType: 'original', preferenceDetails: '', isVipBypass: false, status: 'playing', timestamp: 'Hace 8 min' },
-        { id: 102, song: 'World Hold On', artist: 'Bob Sinclar & Fisher', guest: 'Barra Principal', versionType: 'preference', preferenceDetails: 'Rework Extended Mix', isVipBypass: true, status: 'accepted', timestamp: 'Hace 4 min' },
+        { id: 102, song: 'World Hold On', artist: 'Bob Sinclar & Fisher', guest: 'Barra Principal', versionType: 'preference', preferenceDetails: 'Rework Extended Mix', isVipBypass: true, vipPaymentMethod: 'Transferencia', status: 'accepted', timestamp: 'Hace 4 min' },
         { id: 103, song: 'Mwaki', artist: 'Zerb, Sofiya Nzau', guest: 'Zona Lounge 2', versionType: 'original', preferenceDetails: '', isVipBypass: false, status: 'waiting', timestamp: 'Hace 2 min' }
       ];
     }
@@ -1178,6 +1187,51 @@
         this.vipToggle.addEventListener('change', () => {
           if (this.vipToggle.checked) this.vipDesc.classList.add('visible');
           else this.vipDesc.classList.remove('visible');
+        });
+      }
+
+      // VIP Payment Method Selector (Transferencia vs Efectivo)
+      if (this.btnMethodTransfer && this.btnMethodCash) {
+        this.btnMethodTransfer.addEventListener('click', () => {
+          this.vipPaymentMethod = 'Transferencia';
+          this.btnMethodTransfer.classList.add('active');
+          this.btnMethodCash.classList.remove('active');
+          if (this.panelTransfer) this.panelTransfer.style.display = 'block';
+          if (this.panelCash) this.panelCash.style.display = 'none';
+        });
+
+        this.btnMethodCash.addEventListener('click', () => {
+          this.vipPaymentMethod = 'Efectivo';
+          this.btnMethodCash.classList.add('active');
+          this.btnMethodTransfer.classList.remove('active');
+          if (this.panelTransfer) this.panelTransfer.style.display = 'none';
+          if (this.panelCash) this.panelCash.style.display = 'block';
+        });
+      }
+
+      // Quick Copy Bank Account Number
+      if (this.btnCopyAcc && this.bankAccNumber) {
+        this.btnCopyAcc.addEventListener('click', () => {
+          const num = this.bankAccNumber.textContent.trim();
+          const onCopied = () => {
+            this.btnCopyAcc.classList.add('copied');
+            if (this.btnCopyAccText) this.btnCopyAccText.textContent = '¡Copiado! ✓';
+            setTimeout(() => {
+              this.btnCopyAcc.classList.remove('copied');
+              if (this.btnCopyAccText) this.btnCopyAccText.textContent = 'Copiar';
+            }, 2000);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(num).then(onCopied).catch(onCopied);
+          } else {
+            const ta = document.createElement('textarea');
+            ta.value = num;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            onCopied();
+          }
         });
       }
 
@@ -1209,6 +1263,9 @@
       }
 
       const guestLocation = table ? `${guest} (${table})` : guest;
+      const vipPaymentMethod = isVipBypass ? (this.vipPaymentMethod || 'Transferencia') : '';
+      const vipReceipt = (isVipBypass && this.vipReceiptInput) ? this.vipReceiptInput.value.trim() : '';
+
       const newRequest = {
         id: Date.now(),
         song,
@@ -1217,6 +1274,8 @@
         versionType: isPreference ? 'preference' : 'original',
         preferenceDetails,
         isVipBypass,
+        vipPaymentMethod,
+        vipReceipt,
         status: isVipBypass ? 'accepted' : 'waiting',
         timestamp: 'Ahora mismo'
       };
@@ -1229,6 +1288,14 @@
       toggleVersionPreference(false);
       if (this.vipToggle) this.vipToggle.checked = false;
       if (this.vipDesc) this.vipDesc.classList.remove('visible');
+      if (this.vipReceiptInput) this.vipReceiptInput.value = '';
+      if (this.btnMethodTransfer && this.btnMethodCash) {
+        this.vipPaymentMethod = 'Transferencia';
+        this.btnMethodTransfer.classList.add('active');
+        this.btnMethodCash.classList.remove('active');
+        if (this.panelTransfer) this.panelTransfer.style.display = 'block';
+        if (this.panelCash) this.panelCash.style.display = 'none';
+      }
 
       this.showToast(isVipBypass ? '💎 ¡Petición VIP recibida en cabina! Tu tema tiene prioridad.' : '🎵 ¡Petición enviada a cabina con éxito! Se ha añadido a la cola.');
       
@@ -1866,7 +1933,7 @@
           <div style="min-width: 0;">
             <div style="font-weight: 700; font-size: 0.92rem; color: #fff;">
               #${idx + 1} ${req.song} <span style="font-size: 0.78rem; color: var(--gold-light);">${verText}</span>
-              ${isVip ? `<span class="badge badge-vip" style="font-size: 0.65rem; padding: 0.1rem 0.35rem;">VIP</span>` : ''}
+              ${isVip ? `<span class="badge badge-vip" style="font-size: 0.65rem; padding: 0.1rem 0.35rem;">VIP ${req.vipPaymentMethod ? `[${req.vipPaymentMethod}]` : ''} ${req.vipReceipt ? `(Ref: ${req.vipReceipt})` : ''}</span>` : ''}
             </div>
             <div style="font-size: 0.78rem; color: var(--text-muted);">
               ${req.artist} • ${req.guest} • Estado: <strong>${req.status}</strong>
