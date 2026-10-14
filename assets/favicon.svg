@@ -1,0 +1,27 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="100%" height="100%">
+  <style>
+    :root {
+      --logo-color: #FFFFFF;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --logo-color: #0F0F11;
+      }
+    }
+    .dj-stroke {
+      fill: none;
+      stroke: var(--logo-color);
+      stroke-width: 14;
+      stroke-linecap: butt;
+      stroke-linejoin: round;
+    }
+  </style>
+  <g class="dj-stroke">
+    <!-- Letter J -->
+    <path d="M 141.5 15 L 141.5 96.5 A 41 41 0 0 1 59.5 96.5 L 59.5 85.5" />
+    <!-- Letter d stem -->
+    <path d="M 100.5 15 L 100.5 107.5" />
+    <!-- Letter d bowl -->
+    <path d="M 100.5 96.5 A 41 41 0 1 0 52.38 136.88" />
+  </g>
+</svg>
